@@ -8,6 +8,7 @@ import Donate from "../Pages/Donate";
 import OurWork from "../Pages/OurWork";
 import Campaigns from "../Pages/Campaigns";
 import CampaignsDetails from "../Pages/CampaignsDetails";
+import Contact from "../Pages/Contact";
 
 const AllRoutes = () => {
     const router = createBrowserRouter([
@@ -34,6 +35,10 @@ const AllRoutes = () => {
                 {
                     path: '/campaigns',
                     element: <Campaigns />
+                },
+                {
+                    path: '/contact',
+                    element: <Contact />
                 },
                 {
                     path: `/campaigns/:campaignId`,

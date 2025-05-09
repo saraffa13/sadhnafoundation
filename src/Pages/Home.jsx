@@ -100,6 +100,27 @@ const Home = () => {
                 </div>
             </motion.section>
 
+            {/* Vision Section */}
+            <motion.section
+                className="my-16"
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.2 }}
+                variants={sectionVariants}
+            >
+                <h2 className="text-4xl font-semibold text-gray-800">हमारी दृष्टि</h2>
+                <p className="text-base text-gray-600 mt-6 max-w-2xl mx-auto">
+                    हमारी दृष्टि एक ऐसा समाज बनाना है जहां हर व्यक्ति को समान अवसर मिले। 
+                    हम एक समृद्ध और सशक्त समाज के निर्माण के लिए प्रतिबद्ध हैं।
+                </p>
+                <div className="mt-8">
+                    <img
+                        src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="Vision"
+                        className="rounded-lg shadow-lg mx-auto"
+                    />
+                </div>
+            </motion.section>
 
             {/* Contributors Section */}
             <motion.section
@@ -117,15 +138,21 @@ const Home = () => {
                 ) : (
                     <Slider {...sliderSettings}>
                         {contributors.map((contributor) => (
-                            <div key={contributor.id} className="p-4">
-                                <img
-                                    src={contributor.image}
-                                    alt={contributor.name}
-                                    className="w-32 h-32 mx-auto rounded-full shadow-lg"
-                                />
-                                <h3 className="text-lg font-semibold mt-4">{contributor.name}</h3>
-                                <p className="text-sm text-gray-600">{contributor.description}</p>
-                            </div>
+                            <Link
+                                to={`/profile/${contributor.id}`} // Dynamic link to campaigns
+                                key={contributor.id}
+                                className="p-4 block"
+                            >
+                                <div className="text-center">
+                                    <img
+                                        src={contributor.image}
+                                        alt={contributor.name}
+                                        className="w-32 h-32 mx-auto rounded-full shadow-lg"
+                                    />
+                                    <h3 className="text-lg font-semibold mt-4">{contributor.name}</h3>
+                                    <p className="text-sm text-gray-600">{contributor.description}</p>
+                                </div>
+                            </Link>
                         ))}
                     </Slider>
                 )}

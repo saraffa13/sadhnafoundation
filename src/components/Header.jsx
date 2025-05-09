@@ -38,6 +38,7 @@ const Header = () => {
         { name: "Our Campaigns", link: "/campaigns" },
         { name: "For Nonprofits", link: "/for-nonprofits" },
         { name: "Our Work", link: "/our-work" },
+        { name: "Contact", link: "/contact" },
     ];
 
     return (
