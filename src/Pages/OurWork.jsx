@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ourWorkVideo from "../assests/ourWork.mp4"; // Import the video file
 
 const OurWork = () => {
   const [activeSection, setActiveSection] = useState(null);
@@ -76,6 +77,19 @@ const OurWork = () => {
         <h1 className="text-4xl font-bold text-center text-indigo-600 mb-10">
           Our Work
         </h1>
+
+        {/* Video Section */}
+        <div className="mb-10">
+          <video
+            className="w-full rounded-lg shadow-lg"
+            controls
+            autoPlay
+            muted
+            src={ourWorkVideo}
+            alt="Our Work Video"
+          />
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {sections.map((section, index) => (
             <motion.div
@@ -104,7 +118,9 @@ const OurWork = () => {
                       alt={section.title}
                       className="w-full h-auto rounded-lg mb-4"
                     />
-                    <p className="text-gray-700 text-sm whitespace-pre-line">{section.description}</p>
+                    <p className="text-gray-700 text-sm whitespace-pre-line">
+                      {section.description}
+                    </p>
                   </motion.div>
                 )}
               </AnimatePresence>
