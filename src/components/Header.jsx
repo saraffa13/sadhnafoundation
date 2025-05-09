@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa"; // Import icons from react-icons
 import { motion } from "framer-motion"; // Import motion from framer-motion
+import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import logo from "../assests/SadhnaFoundation.png"; // Adjust the path to your logo image
 
 const Header = () => {
@@ -30,6 +31,15 @@ const Header = () => {
         },
     };
 
+    const menuItems = [
+        { name: "Home", link: "/" },
+        { name: "About", link: "/about" },
+        { name: "Donate", link: "/donate" },
+        { name: "Our Campaigns", link: "/campaigns" },
+        { name: "For Nonprofits", link: "/for-nonprofits" },
+        { name: "Our Work", link: "/our-work" },
+    ];
+
     return (
         <header className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md">
             <div className="container mx-auto px-4 py-4 flex justify-between items-center">
@@ -44,21 +54,18 @@ const Header = () => {
 
                 {/* Desktop Navigation */}
                 <nav className="hidden md:flex space-x-6">
-                    <a href="/" className="hover:text-yellow-300 font-medium">
-                        Home
-                    </a>
-                    <a href="/donate" className="hover:text-yellow-300 font-medium">
-                        Donate
-                    </a>
-                    <a href="/for-donors" className="hover:text-yellow-300 font-medium">
-                        For Donors
-                    </a>
-                    <a href="/for-nonprofits" className="hover:text-yellow-300 font-medium">
-                        For Nonprofits
-                    </a>
-                    <a href="/more" className="hover:text-yellow-300 font-medium">
-                        More
-                    </a>
+                    <ul className="flex space-x-6">
+                        {menuItems.map((item, index) => (
+                            <li key={index}>
+                                <Link
+                                    to={item.link}
+                                    className="hover:text-yellow-300 font-medium"
+                                >
+                                    {item.name}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
                 </nav>
 
                 {/* Mobile Menu Button */}
@@ -85,31 +92,17 @@ const Header = () => {
                     variants={menuVariants}
                 >
                     <ul className="flex flex-col space-y-4 px-4 py-4">
-                        <li>
-                            <a href="/" className="hover:text-yellow-300 font-medium">
-                                Home
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/donate" className="hover:text-yellow-300 font-medium">
-                                Donate
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/for-donors" className="hover:text-yellow-300 font-medium">
-                                For Donors
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/for-nonprofits" className="hover:text-yellow-300 font-medium">
-                                For Nonprofits
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/more" className="hover:text-yellow-300 font-medium">
-                                More
-                            </a>
-                        </li>
+                        {menuItems.map((item, index) => (
+                            <li key={index}>
+                                <Link
+                                    to={item.link}
+                                    className="hover:text-yellow-300 font-medium"
+                                    onClick={() => setIsMenuOpen(false)} // Close menu on link click
+                                >
+                                    {item.name}
+                                </Link>
+                            </li>
+                        ))}
                     </ul>
                 </motion.nav>
             )}

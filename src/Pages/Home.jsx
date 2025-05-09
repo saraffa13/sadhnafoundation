@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion"; // Import motion from framer-motion
 import Slider from "react-slick"; // Import Slider from react-slick
 import "slick-carousel/slick/slick.css"; // Import slick-carousel styles
 import "slick-carousel/slick/slick-theme.css"; // Import slick-carousel theme styles
-import Adarsh from "../assests/1.sadhna.jpg"
-import Adarsh2 from "../assests/3.sadhna.jpg" 
-import Deepak from "../assests/2.sadhna.jpg"
+import { useDispatch, useSelector } from "react-redux";
+import { fetchContributors } from "../store/reducers/contributors"; // Import the thunk
+import { Link } from "react-router-dom";
 
 const Home = () => {
+    const dispatch = useDispatch();
+    const { contributors, loading, error } = useSelector((state) => state.contributors);
+
+    // Fetch contributors on component mount
+    useEffect(() => {
+        dispatch(fetchContributors());
+    }, [dispatch]);
+
     // Animation variants for sections
     const sectionVariants = {
         hidden: { opacity: 0, y: 50 },
@@ -39,29 +47,6 @@ const Home = () => {
         ],
     };
 
-    const contributors = [
-        {
-            name: "Adarsh Sinha",
-            description: "Philanthropist and community leader.",
-            image: Adarsh2,
-        },
-        {
-            name: "Deepak Shrivastava",
-            description: "Healthcare advocate and volunteer.",
-            image: Adarsh2
-        },
-        {
-            name: "Sadhna Sinha",
-            description: "Education specialist and mentor.",
-            image: Adarsh2
-        },
-        {
-            name: "Emily Davis",
-            description: "Sustainability expert and activist.",
-            image: Adarsh2
-        },
-    ];
-
     return (
         <div className="font-sans text-center p-6 bg-gray-50 min-h-screen">
             {/* Hero Section */}
@@ -72,22 +57,22 @@ const Home = () => {
                 variants={sectionVariants}
             >
                 <div className="max-w-4xl mx-auto">
-                    <h1 className="text-5xl font-extrabold">Welcome to Sadhna Foundation</h1>
+                    <h1 className="text-5xl font-extrabold">साधना फाउंडेशन में आपका स्वागत है</h1>
                     <p className="text-lg mt-4">
-                        Empowering communities, transforming lives.
+                        समुदायों को सशक्त बनाना, जीवन को बदलना।
                     </p>
                     <div className="mt-8 flex justify-center gap-4">
-                        <button
+                        <Link
                             className="bg-yellow-400 text-gray-800 py-2 px-6 rounded-lg text-lg font-semibold hover:bg-yellow-500 transition duration-300"
-                            onClick={() => alert('Redirecting to Donate page...')}
+                            to={`/donate`}
                         >
-                            Donate
-                        </button>
+                            दान करें
+                        </Link>
                         <button
                             className="bg-green-500 text-white py-2 px-6 rounded-lg text-lg font-semibold hover:bg-green-600 transition duration-300"
-                            onClick={() => alert('Redirecting to Fundraise page...')}
+                            onClick={() => alert('फंडरेज़ पेज पर रीडायरेक्ट हो रहा है...')}
                         >
-                            Fundraise
+                            फंडरेज़ करें
                         </button>
                     </div>
                 </div>
@@ -101,12 +86,10 @@ const Home = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 variants={sectionVariants}
             >
-                <h2 className="text-4xl font-semibold text-gray-800">Our Mission</h2>
+                <h2 className="text-4xl font-semibold text-gray-800">हमारा मिशन</h2>
                 <p className="text-base text-gray-600 mt-6 max-w-2xl mx-auto">
-                    At Sadhna Foundation, we are dedicated to uplifting underprivileged communities
-                    through education, healthcare, and sustainable development initiatives. Join us in
-                    making a difference by contributing to our mission of creating a brighter future
-                    for everyone.
+                    साधना फाउंडेशन में, हम शिक्षा, स्वास्थ्य सेवा, और सतत विकास पहलों के माध्यम से वंचित समुदायों को सशक्त बनाने के लिए समर्पित हैं। 
+                    हमारे मिशन में योगदान देकर सभी के लिए एक उज्जवल भविष्य बनाने में हमारा साथ दें।
                 </p>
                 <div className="mt-8">
                     <img
@@ -117,31 +100,8 @@ const Home = () => {
                 </div>
             </motion.section>
 
-            {/* Our Contributors Section */}
-            <motion.section
-                className="my-16"
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.2 }}
-                variants={sectionVariants}
-            >
-                <h2 className="text-4xl font-semibold text-gray-800 mb-8">Our Contributors</h2>
-                <Slider {...sliderSettings}>
-                    {contributors.map((contributor, index) => (
-                        <div key={index} className="p-4">
-                            <img
-                                src={contributor.image}
-                                alt={contributor.name}
-                                className="w-32 h-32 mx-auto rounded-full shadow-lg"
-                            />
-                            <h3 className="text-lg font-semibold mt-4">{contributor.name}</h3>
-                            <p className="text-sm text-gray-600">{contributor.description}</p>
-                        </div>
-                    ))}
-                </Slider>
-            </motion.section>
 
-            {/* Call to Action */}
+            {/* Contributors Section */}
             <motion.section
                 className="my-16"
                 initial="hidden"
@@ -149,12 +109,26 @@ const Home = () => {
                 viewport={{ once: true, amount: 0.2 }}
                 variants={sectionVariants}
             >
-                <button
-                    className="bg-blue-500 text-white py-3 px-8 rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-300"
-                    onClick={() => alert('Thank you for your interest!')}
-                >
-                    Get Involved
-                </button>
+                <h2 className="text-4xl font-semibold text-gray-800 mb-8">हमारे योगदानकर्ता</h2>
+                {loading ? (
+                    <p>Loading...</p>
+                ) : error ? (
+                    <p className="text-red-500">Error: {error}</p>
+                ) : (
+                    <Slider {...sliderSettings}>
+                        {contributors.map((contributor) => (
+                            <div key={contributor.id} className="p-4">
+                                <img
+                                    src={contributor.image}
+                                    alt={contributor.name}
+                                    className="w-32 h-32 mx-auto rounded-full shadow-lg"
+                                />
+                                <h3 className="text-lg font-semibold mt-4">{contributor.name}</h3>
+                                <p className="text-sm text-gray-600">{contributor.description}</p>
+                            </div>
+                        ))}
+                    </Slider>
+                )}
             </motion.section>
         </div>
     );
